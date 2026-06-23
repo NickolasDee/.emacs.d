@@ -130,8 +130,6 @@
   (add-to-list 'eglot-server-programs
                '((kotlin-mode kotlin-ts-mode) . ("kotlin-language-server"))))
 
-
-
 (provide 'init-programming)
 ;;; init-programmin-tools.el ends here
 

@@ -11,7 +11,7 @@
 (set-fontset-font t 'han (font-spec :family "WenQuanYi Micro Hei Mono" :size 10.5))
 (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-10.5")
 (use-package ace-window)
-(global-set-key (kbd "s-w") 'ace-window)
+(global-set-key (kbd "C-x o") 'ace-window)
 (custom-set-faces
  '(aw-leading-char-face
    ((t (:inherit ace-jump-face-foreground 

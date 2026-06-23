@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
-
 ;; init.el
+
 ;; 1. 声明引导代码
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -46,15 +46,17 @@
 
 (require 'init-settings)
 (require 'init-evil)
-(require 'init-reader)
 (require 'init-tools)
-;; vterm 不适合windows或android
+;; vterm和pdf-tools 不适合android
 (when (and (eq system-type 'gnu/linux)
 	   (not (featurep 'android)))
+  (require 'init-reader)
   (require 'init-vterm))
 (require 'init-org)
 (require 'init-keys)
 (require 'init-programming)
+(when (eq system-type 'android)
+  (require 'init-android))
 (message "Emacs 配置文件加载完成！")
 
 (custom-set-faces

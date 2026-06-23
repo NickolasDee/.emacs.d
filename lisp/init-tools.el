@@ -2,7 +2,13 @@
 ;; lisp/init-tools.el
 (use-package with-proxy)
 (use-package magit)
-
+(use-package expand-region)
+;; 将智能选择直接绑定到 Evil 的可视化模式（Visual Mode）中
+(with-eval-after-load 'evil
+  ;; 在 Visual 模式下，直接按 v 键可以让选区“膨胀”（智能扩大）
+  (define-key evil-visual-state-map (kbd "v") 'er/expand-region)
+  ;; 在 Visual 模式下，按 V (Shift+v) 可以让选区“收缩”
+  (define-key evil-visual-state-map (kbd "V") 'er/contract-region))
 ;; 1. Vertico: 提供垂直补全界面
 (use-package vertico  :init (vertico-mode))
 ;; 2. Marginalia: 在补全菜单右侧显示快捷键和注释
@@ -90,4 +96,3 @@
 (setq auto-save-file-name-transforms '((".*" "~/.cache/emacs/backup/" t)))
 
 (provide 'init-tools)
-
