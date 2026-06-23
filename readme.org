@@ -1,0 +1,42 @@
+* 说明
+作为个人的emacs配置。适用于android和gnu/linux类系统。
+** android 配置
+android 端需要安装termux,并且是termux和emacs安卓版同uid的特殊版本。
+此外，需要将以下代码保存在 /data/data/org.gnu.emacs/files/.emacs.d/init.el
+#+begin_src lisp
+    
+  ;; -*- lexical-binding: t; -*-
+  ;; ====================================================================
+  ;; 1. 宿主环境基础配置
+  ;; ====================================================================
+  (setq exec-path (append '("/data/data/com.termux/files/usr/bin") exec-path))
+  (setenv "TMPDIR" "/data/data/com.termux/files/usr/tmp")
+
+  ;; 映射主目录
+  (setenv "HOME" "/data/data/com.termux/files/home")
+  (setq user-emacs-directory "/data/data/com.termux/files/home/.emacs.d/")
+
+
+  ;; ====================================================================
+  ;; 2. 【回归正统】利用官方白名单白嫖系统底层的进程创建器
+  ;; ====================================================================
+
+  ;; 必须开启官方的 exec-loader。因为只有通过它，Emacs 才能调用它自身安装包
+  ;; 内部自带的、经过签名白名单豁免的底层二进制加载器，这是唯一能合法绕过 SECCOMP 的通道
+  (setq android-use-exec-loader t)
+
+  ;; 将底层外壳强行指回 Android 系统的原生 sh 维持安全上下文
+  (setq shell-file-name "/system/bin/sh")
+  (setq shell-command-switch "-c")
+  ;; 绝对不要下面这一行代码，它会导至
+  ;; CANNOT LINK EXECUTABLE "/system/bin/app_process64": cannot locate symbol "EVP_MD_CTX_init" referenced by "/system/lib64/libsqlite.so"...
+  ;;(push "LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib" process-environment)
+  ;; ====================================================================
+
+  ;; 3. 金蝉脱壳：穿透加载核心配置
+  ;; ====================================================================
+  (let ((termux-config-path "/data/data/com.termux/files/home/.emacs.d/init.el"))
+    (when (file-exists-p termux-config-path)
+      (load termux-config-path)))
+
+#+end_src

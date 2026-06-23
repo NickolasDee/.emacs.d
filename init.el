@@ -53,6 +53,7 @@
   (require 'init-reader)
   (require 'init-vterm))
 (require 'init-org)
+(require 'org-tempo)
 (require 'init-keys)
 (require 'init-programming)
 (when (eq system-type 'android)
